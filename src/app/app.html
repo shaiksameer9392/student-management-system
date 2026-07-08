@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="app.css"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="app.css">
+</head>
+
+<body>
+
+<div class="container-fluid">
+
+    <div class="row">
+
+        <!-- Sidebar -->
+
+        <div class="col-lg-2 sidebar">
+
+            <h3 class="text-center mt-4 text-white">
+                <i class="bi bi-mortarboard-fill"></i>
+            </h3>
+
+            <ul class="nav flex-column mt-5">
+
+                <li class="nav-item">
+                    <a class="nav-link active">
+                        <i class="bi bi-house-door-fill"></i>
+                        Home
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="bi bi-people-fill"></i>
+                        Students
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="bi bi-book-fill"></i>
+                        Courses
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="bi bi-building"></i>
+                        Departments
+                    </a>
+                </li>
+
+                <li class="nav-item mt-auto">
+                    <a href="#" class="nav-link">
+                        <i class="bi bi-box-arrow-right"></i>
+                        Logout
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+        <!-- Main Content -->
+
+        <div class="col-lg-10 main-content">
+
+            <!-- Header -->
+
+            <div class="header">
+
+                <h1>
+                    STUDENT MANAGEMENT SYSTEM
+                </h1>
+
+                <div class="admin">
+
+                    <i class="bi bi-person-circle"></i>
+
+                    Welcome Admin
+
+                </div>
+
+            </div>
+
+            <!-- Add Student -->
+
+            <div class="card shadow-lg p-4 mt-4">
+
+                <h3 class="mb-4">
+
+                    <i class="bi bi-person-plus-fill text-primary"></i>
+
+                    Add Student
+
+                </h3>
+
+                <div class="row">
+
+                    <div class="col-md-3 mb-3">
+                        <label>ID</label>
+                        <input type="number" name="id" class="form-control" #studentId="ngModel"  placeholder="Enter ID" [(ngModel)]="id" required>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label>Name</label>
+                        <input type="text" name="name" class="form-control" #studentName="ngModel" placeholder="Enter Name" [(ngModel)]="name" required minlength="3">
+                    </div>
+                  <div class="text-danger mt-1" *ngIf="studentName.invalid && studentName.touched">
+                    Name Required
+                  </div >
+                  <div class="text-danger" *ngIf="studentName.errors?.['minlength']">
+                    Minimum 3 characters required
+                  </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label>Age</label>
+                        <input
+type="number"
+class="form-control"
+name="age"
+[(ngModel)]="age"
+#studentAge="ngModel"
+required
+min="18"
+max="60">
+                    </div>
+                    <div
+class="text-danger"
+*ngIf="studentAge.invalid && studentAge.touched">
+
+Age must be between 18 and 60.
+
+</div>  
+
+                    <div class="col-md-3 mb-3">
+                        <label>Course</label>
+                        <input
+type="text"
+class="form-control"
+name="course"
+[(ngModel)]="course"
+#studentCourse="ngModel"
+required
+placeholder="Enter Course">
+                    </div>
+                    <div
+class="text-danger"
+*ngIf="studentCourse.invalid && studentCourse.touched">
+
+Course is required.
+
+</div>
+
+                    <div class="col-md-4 mb-3">
+                        <label>Department</label>
+                        <input
+type="text"
+class="form-control"
+name="department"
+[(ngModel)]="department"
+#studentDepartment="ngModel"
+required
+placeholder="Department">
+                    </div>
+
+                 <div class="col-md-4 mb-3">
+                        <label>Phone</label>
+                        <input
+type="text"
+class="form-control"
+name="phone"
+[(ngModel)]="phone"
+#studentPhone="ngModel"
+required
+pattern="[0-9]{10}">
+                    </div>
+                    <div
+class="text-danger"
+*ngIf="studentPhone.invalid && studentPhone.touched">
+
+Enter a valid 10-digit phone number.
+
+</div>
+
+
+
+                   <div class="mb-3">
+  <label class="form-label">Email address</label>
+  <input
+type="email"
+class="form-control"
+name="email"
+[(ngModel)]="email"
+#studentEmail="ngModel"
+required
+email>
+</div>
+<div class="text-danger" *ngIf="studentEmail.invalid && studentEmail.touched">
+    Enter a valid Email
+</div>
+
+
+
+                </div>
+
+                <button
+class="btn btn-success mt-3"
+*ngIf="editIndex==-1"
+(click)="addstudent()" >
+
+Add Student
+
+</button>
+
+<button
+class="btn btn-warning mt-3"
+*ngIf="editIndex!=-1"
+(click)="updatestudent()">
+
+Update Student
+
+</button>
+
+<button *ngIf="editIndex!=-1" (click)="canceledit()" class="btn btn-danger">Cancel</button>
+
+            </div>
+
+            <form #studentForm="ngForm">
+
+    <!-- All your student inputs -->
+
+</form>
+
+            <!-- Search -->
+
+            <div class="card shadow p-4 mt-4">
+
+                <h3>
+
+                    <i class="bi bi-search text-primary"></i>
+
+                    Search Student
+
+                </h3>
+
+                <div class="row mt-3">
+
+                    <div class="col-md-9">
+
+                        <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Enter Student ID" [(ngModel)]="searchid">
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <button class="btn btn-primary w-100" (click)="searchstudent(searchid)">
+
+                            Search
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Student Table -->
+
+            <div class="card shadow-lg p-4 mt-4">
+
+                <div class="d-flex justify-content-between">
+
+                    <h3>
+
+                        <i class="bi bi-people-fill text-success"></i>
+
+                        Students
+
+                    </h3>
+
+                    <span class="badge bg-success fs-6">
+
+                        Total Students : {{student.length}}
+
+                    </span>
+
+                </div>
+
+                <table class="table table-hover table-bordered mt-4 align-middle">
+
+                    <thead class="table-primary">
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Name</th>
+
+                        <th>Age</th>
+
+                        <th>Course</th>
+
+                        <th>Department</th>
+
+                        <th>Email</th>
+
+                        <th>Phone</th>
+
+                        <th>Actions</th>
+
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    <tr *ngFor="let s of student";let i=index>
+
+                        <td>{{s.id}}</td>
+
+                        <td>{{s.name}}</td>
+
+                        <td>{{s.age}}</td>
+
+                        <td>{{s.course}}</td>
+
+                        <td>{{s.department}}</td>
+
+                        <td>{{s.email}}</td>
+
+                        <td>{{s.phone}}</td>
+
+                        <td>
+
+                            <button class="btn btn-primary btn-sm" (click)="editstudent(id)">
+
+                                <i class="bi bi-pencil-square"></i>
+
+                                Edit
+
+                            </button>
+
+                            <button class="btn btn-danger btn-sm" (click)="deletestudent(id)">
+
+                                <i class="bi bi-trash-fill"></i>
+
+                                Delete
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="card mt-4 p-3" *ngIf="found">
+    <h1>STUDENT FOUND</h1>
+    <p>ID :{{found.id}}</p>
+    <p>NAME :{{found.name}}</p>
+    <p>AGE :{{found.age}}</p>
+    <p>COURSE :{{found.course}}</p>
+    <p>DEPARTMENT :{{found.department}}</p>
+    <p>EMAIL :{{found.email}}</p>
+    <p>PHONE :{{found.phone}}</p>
+</div>
+
+<h1 *ngIf="not" style="margin-left: 110vh;">STUDENT NOT FOUND</h1>
+
+</body>
+</html>
