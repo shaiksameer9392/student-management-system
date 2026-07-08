@@ -92,7 +92,7 @@ http://localhost:4200
 
 GitHub: https://github.com/shaiksameer9392
 
-LinkedIn: *(Add your LinkedIn profile URL here)*
+LinkedIn: linkedin.com/in/sksameer9392
 
 ---
 
